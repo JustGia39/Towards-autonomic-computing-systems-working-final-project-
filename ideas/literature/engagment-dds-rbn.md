@@ -84,4 +84,7 @@ but after reading through this paper it gives me a theorical foundation for self
 IEEE 5395120
 Autonomic Computing Paradigm to Support System's Development
 
+(further backs my theory of autonomics not only being an advancement but the only way forward for some enterprises and systems like banks due to the lose when going down.)
+
+again highlghed is that there are only autonomic elements and not a fully autonomic system. most papers focus on individual parts of the four main requirments of autonomics and not so much a theory of how to mix and collabroate them logically in a proposed system toward any respect, whether a personal computer, a network, firewall or program. combining CHOP/CHOD the four elements in a theory are needed before advancements can be made and to further show the need modern systems have for autonomics. 
 

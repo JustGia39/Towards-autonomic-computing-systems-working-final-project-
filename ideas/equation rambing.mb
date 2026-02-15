@@ -1,0 +1,159 @@
+
+for the whole system wokring off four componenets it starts wiht the systems state including all of the modules: 
+
+S(t) = [H(t), O(t), C(t), D(t)]
+
+H health 
+O optimization 
+C configuration 
+D defence 
+
+t is the vector for time. 
+
+evolution of system 
+
+S(t+1) = S(t) + A(t) + N(t)
+
+A(t) being autonomic action whihc would be the actions of the four modules 
+N(t) is the noise/ disturbance like whats trigggering the action of the modules to start like traffic spikes, hardware failures etc 
+
+
+self-healing 
+
+H(t) = 1 - (W(e)E(t) + w(l)L(t) + w(f)F(t))
+
+E(t) is error rate 
+L(t) is latency 
+F(t) is failure probability 
+wieght sum to <(and equal) to  1 
+
+if error rise the health drops and if a failure spikes the health drops which triggers 
+
+if H(t) < tau -> repair action 
+
+tau is the safety threshold
+
+and example of this would be 
+
+if health < 0.7; 
+     restart_service()
+
+after the repair you have 
+
+H(t+1) = H(t) + alpha(1 - H(t))
+
+ i cannot type the alpah symbol for preferential connection parameter nor copy it in. 
+ a smaller alpha is a slower recovery and a larger alpja is a aggressive repair. 
+--------------
+
+optimization equations, 
+cost of the optimzation 
+
+J(t) = aC(t) + bL(t) + cE(t) 
+
+C(t) computer usage 
+L(t) latency 
+E(t) error 
+
+the goal is to min J(t)
+to do maybe use gradient descent 
+
+update rule for minimised cost in runtime 
+
+x(t+1) = x(t) - eta Delta J(t)
+
+eta is the learning rate 
+small eta is stable 
+large eta is risky but fast 
+
+----------------
+
+Configuration 
+
+V(k) = i∑​ gi​(k)^2
+
+gi (k) is constraint violations 
+
+want is min V(k)
+if the v(k)=0 
+
+
+------ 
+self defence
+
+D(t)​= squared (x(t)​−μ) TΣ−1 (x(t)​−μ)
+
+this is mahalanbis distance for anomaly detection, 
+
+for the detection trigger 
+its D(t) > κ -> threat detected 
+
+-----
+
+A(t) = { heal,  H(t) < τ
+       { defend,  D(t)  > κ
+       {optimize, J(t)  > Jtarget 
+
+-----------
+
+autonomic resilience simulation framework 
+
+at the core the closed system loop will act as 
+
+environment - metrics - decision engine - action - new state 
+
+the system state model with master vector as made: 
+
+S(t) = [H(t), O(t), C(t), D(t)]
+
+eg
+state = {
+    latency 
+    error_rate 
+    cpu_usage 
+    memory_usage 
+    config_valid
+    anomaly_score 
+  }
+
+failure injection for example node crashes, traffic spikes, memory leaks and malicious requests
+
+N(t) ~ P(λ) 
+disturbance is sampled from a probability disribution 
+
+
+to compute health of the system - 
+
+H(t) = 1 - (0.4E(t) + 0.3L(t) + 0.3F(t))
+
+cost funcion 
+
+J(t) = alphaC(t) + betaL(t) + cE(t)
+
+anomaly scoring 
+
+Z = x - μ/ σ
+if the threshold is les than Z then system is susipcious. 
+
+decision engine draft basic 
+
+IF anomaly high -> defend 
+ELSE IF health low -> heal 
+ELSE IF cost high -> optimise 
+ELSE -> maintain 
+
+which would write as A(t) = π(S(t))
+
+for t in time_steps: 
+    inject_disturbance()
+    measure_metric()
+    compute_health()
+    compute_anomaly()
+    detect_anomaly()
+    action = policy(state)
+    apply(action) 
+    log_results()
+    
+
+      
+ 
